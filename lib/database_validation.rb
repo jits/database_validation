@@ -33,6 +33,7 @@ module DatabaseValidation
         end
 
       end
+      raise ActiveRecord::Base.connection.indexes(base.table_name).inspect
       ActiveRecord::Base.connection.indexes(base.table_name).each do |key|
         col_syms = key.columns.map(&:to_sym)
         base.send(:validates_uniqueness_of, col_syms.first.to_sym, :scope => col_syms[1..-1]) if key.unique
